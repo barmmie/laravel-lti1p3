@@ -1,6 +1,6 @@
 <?php
 
-namespace Wien\LaravelLti1p3\Tests;
+namespace Wien\LaravelLTI\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
