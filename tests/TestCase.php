@@ -4,7 +4,7 @@ namespace Wien\LaravelLti1p3\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Wien\LaravelLti1p3\LaravelLti1p3ServiceProvider;
+use Wien\LaravelLti1p3\LaravelLTIServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -20,7 +20,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelLti1p3ServiceProvider::class,
+            LaravelLTIServiceProvider::class,
         ];
     }
 
