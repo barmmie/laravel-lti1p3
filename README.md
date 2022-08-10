@@ -1,12 +1,5 @@
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Package for LTI 1.3 implementations as platforms and /or tools
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/wien/laravel-lti1p3.svg?style=flat-square)](https://packagist.org/packages/wien/laravel-lti1p3)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/wien/laravel-lti1p3/run-tests?label=tests)](https://github.com/wien/laravel-lti1p3/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/wien/laravel-lti1p3/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/wien/laravel-lti1p3/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/wien/laravel-lti1p3.svg?style=flat-square)](https://packagist.org/packages/wien/laravel-lti1p3)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -26,12 +19,39 @@ php artisan vendor:publish --tag="laravel-lti-config"
 
 This is the contents of the published config file:
 
-
 ## Usage
 
 ```php
-$laravelLti1p3 = new Wien\LaravelLti1p3();
-echo $laravelLti1p3->echoPhrase('Hello, Wien!');
+<?php
+
+use OAT\Library\Lti1p3Core\Message\Launch\Builder\PlatformOriginatingLaunchBuilder;
+use OAT\Library\Lti1p3Core\Message\LtiMessageInterface;
+use OAT\Library\Lti1p3Core\Message\Payload\Claim\ContextClaim;
+use OAT\Library\Lti1p3Core\Registration\RegistrationRepositoryInterface;
+
+// Create a builder instance
+$builder = new PlatformOriginatingLaunchBuilder();
+
+// Get related registration of the launch
+/** @var RegistrationRepositoryInterface $registrationRepository */
+$registration = $registrationRepository->find(...);
+
+// Build a launch message
+$message = $builder->buildPlatformOriginatingLaunch(
+    $registration,                                               // related registration
+    LtiMessageInterface::LTI_MESSAGE_TYPE_RESOURCE_LINK_REQUEST, // message type of the launch, as an example: 'LtiDeepLinkingResponse'
+    'http://tool.com/launch',                                    // target link uri of the launch (final destination after OIDC flow)
+    'loginHint',                                                 // login hint that will be used afterwards by the platform to perform authentication
+    null,                                                        // will use the registration default deployment id, but you can pass a specific one
+    [
+        'http://purl.imsglobal.org/vocab/lis/v2/membership#Learner' // role
+    ],
+    [
+        'myCustomClaim' => 'myCustomValue',    // custom claim
+        new ContextClaim('contextIdentifier')  // LTI claim representing the context of the launch 
+    ]
+);
+
 ```
 
 ## Testing
