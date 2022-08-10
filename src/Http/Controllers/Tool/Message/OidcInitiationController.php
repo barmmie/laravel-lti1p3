@@ -13,7 +13,6 @@ use Throwable;
 
 class OidcInitiationController
 {
-
     public function __construct(
         private HttpMessageFactoryInterface $factory,
         private OidcInitiator $initiator,
@@ -29,7 +28,6 @@ class OidcInitiationController
             $this->logger->info('OidcInitiationAction: initiation success');
 
             return new RedirectResponse($oidcAuthenticationRequest->toUrl());
-
         } catch (LtiExceptionInterface $exception) {
             $this->logger->error(sprintf('OidcInitiationAction: %s', $exception->getMessage()));
 

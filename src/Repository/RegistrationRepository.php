@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Wien\LaravelLTI\Repository;
 
-use OAT\Library\Lti1p3Core\Util\Collection\Collection;
-use OAT\Library\Lti1p3Core\Util\Collection\CollectionInterface;
 use OAT\Library\Lti1p3Core\Registration\RegistrationInterface;
 use OAT\Library\Lti1p3Core\Registration\RegistrationRepositoryInterface;
+use OAT\Library\Lti1p3Core\Util\Collection\Collection;
+use OAT\Library\Lti1p3Core\Util\Collection\CollectionInterface;
 
 class RegistrationRepository implements RegistrationRepositoryInterface
 {
@@ -19,7 +19,7 @@ class RegistrationRepository implements RegistrationRepositoryInterface
         $this->registrations = new Collection();
 
         foreach ($registrations as $registration) {
-            /** @param RegistrationInterface $registration */
+            /** @param  RegistrationInterface  $registration */
             $this->registrations->set($registration->getIdentifier(), $registration);
         }
     }

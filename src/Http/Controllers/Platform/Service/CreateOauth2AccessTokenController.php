@@ -12,7 +12,6 @@ use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
 
 class CreateOauth2AccessTokenController
 {
-
     public function __construct(
         private HttpFoundationFactoryInterface $httpFoundationFactory,
         private HttpMessageFactoryInterface $psr7Factory,
@@ -20,7 +19,6 @@ class CreateOauth2AccessTokenController
         private LoggerInterface $logger
     ) {
     }
-
 
     public function __invoke(Request $request, string $keyChainIdentifier): Response
     {
@@ -35,10 +33,9 @@ class CreateOauth2AccessTokenController
 
             $this->logger->info('OAuth2AccessTokenCreationAction: access token generation success');
 
-              return $this->parseResponse(
-                  $this->httpFoundationFactory->createResponse($psr7AuthenticationResponse)
-              );
-
+            return $this->parseResponse(
+                $this->httpFoundationFactory->createResponse($psr7AuthenticationResponse)
+            );
         } catch (OAuthServerException $exception) {
             $this->logger->error(sprintf('OAuth2AccessTokenCreationAction: %s', $exception->getMessage()));
 
@@ -52,5 +49,4 @@ class CreateOauth2AccessTokenController
     {
         return new Response($response->getContent(), $response->getStatusCode(), $response->headers->all());
     }
-
 }

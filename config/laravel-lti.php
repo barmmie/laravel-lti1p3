@@ -4,26 +4,26 @@
 return [
     'routing' => [
         'domain' => null,
-        'prefix' => null
+        'prefix' => null,
     ],
     'key_chains' => [
         'platformKey' => [
             'key_set_name' => 'platformSet',
             'public_key' => base_path('/config/secrets/dev/public.key'),
             'private_key' => base_path('/config/secrets/dev/private.key'),
-            'private_key_passphrase' => NULL,
+            'private_key_passphrase' => null,
         ],
         'toolKey' => [
             'key_set_name' => 'toolSet',
             'public_key' => base_path('/config/secrets/dev/public.key'),
             'private_key' => base_path('/config/secrets/dev/private.key'),
-            'private_key_passphrase' => NULL,
+            'private_key_passphrase' => null,
         ],
         'paidiKey' => [
             'key_set_name' => 'paidiSet',
             'public_key' => base_path('/config/secrets/dev/public.key'),
             'private_key' => base_path('/config/secrets/dev/private.key'),
-            'private_key_passphrase' => NULL,
+            'private_key_passphrase' => null,
             'algorithm' => 'RS256',
         ],
     ],
@@ -46,15 +46,15 @@ return [
             'name' => 'Local tool',
             'audience' => 'http://localhost/tool',
             'oidc_initiation_url' => 'http://localhost/lti1p3/oidc/initiation',
-            'launch_url' => NULL,
-            'deep_linking_url' => NULL,
+            'launch_url' => null,
+            'deep_linking_url' => null,
         ],
         'riTool' => [
             'name' => 'Qwiklabs_1',
             'audience' => 'http://kogneos-lti-test.kogneos.com',
             'oidc_initiation_url' => 'https://kogneos-lti-test.kogneos.com/lti1p3/oidc/initiation',
             'launch_url' => 'https://kogneos-lti-test.kogneos.com/tool/launch',
-            'deep_linking_url' => NULL,
+            'deep_linking_url' => null,
         ],
         'tao_devkit_tool' => [
             'name' => 'TAO DevKit tool',
@@ -74,8 +74,8 @@ return [
             ],
             'platform_key_chain' => 'platformKey',
             'tool_key_chain' => 'toolKey',
-            'platform_jwks_url' => NULL,
-            'tool_jwks_url' => NULL,
+            'platform_jwks_url' => null,
+            'tool_jwks_url' => null,
         ],
         'devkit_paidi_1' => [
             'client_id' => 'QW12345',

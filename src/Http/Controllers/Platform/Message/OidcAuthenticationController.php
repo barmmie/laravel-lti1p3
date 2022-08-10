@@ -12,7 +12,6 @@ use Throwable;
 
 class OidcAuthenticationController
 {
-
     public function __construct(
         private HttpMessageFactoryInterface $factory,
         private OidcAuthenticator $authenticator,
@@ -28,7 +27,6 @@ class OidcAuthenticationController
             $this->logger->info('OidcAuthenticationAction: authentication success');
 
             return new Response($launchRequest->toHtmlRedirectForm());
-
         } catch (LtiExceptionInterface $exception) {
             $this->logger->error(sprintf('OidcAuthenticationAction: %s', $exception->getMessage()));
 

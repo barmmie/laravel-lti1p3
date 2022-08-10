@@ -45,9 +45,9 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
     private function registerLTIRegistrations()
     {
-
-        $this->app->bind(RegistrationRepositoryInterface::class, function($app) {
+        $this->app->bind(RegistrationRepositoryInterface::class, function ($app) {
             $configuration = config('laravel-lti');
+
             return new RegistrationRepository(
                 $this->buildRegistrations(
                     $configuration,
@@ -70,6 +70,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
             foreach ($keychains as $keychain) {
                 $repository->addKeyChain($keychain);
             }
+
             return $repository;
         });
     }
@@ -162,15 +163,15 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
         $configuredRegistrations = $configuration['registrations'] ?? [];
 
-        uasort($configuredRegistrations, function(array $registration1, array $registration2) {
+        uasort($configuredRegistrations, function (array $registration1, array $registration2) {
             $orderRegistration1 = $registration1['order'] ?? 999999;
             $orderRegistration2 = $registration2['order'] ?? 999999;
+
             return $orderRegistration1 <=> $orderRegistration2;
         });
 
         foreach ($configuredRegistrations as $registrationId => $registrationData) {
-
-            if (!array_key_exists($registrationData['platform'], $platforms)) {
+            if (! array_key_exists($registrationData['platform'], $platforms)) {
                 throw new InvalidArgumentException(
                     sprintf(
                         'Platform %s is not defined, possible values: %s',
@@ -180,7 +181,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
                 );
             }
 
-            if (!array_key_exists($registrationData['tool'], $tools)) {
+            if (! array_key_exists($registrationData['tool'], $tools)) {
                 throw new InvalidArgumentException(
                     sprintf(
                         'Tool %s is not defined, possible values: %s',
@@ -192,7 +193,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
             if (
                 isset($registrationData['platform_key_chain'])
-                && !array_key_exists($registrationData['platform_key_chain'], $keyChains)
+                && ! array_key_exists($registrationData['platform_key_chain'], $keyChains)
             ) {
                 throw new InvalidArgumentException(
                     sprintf(
@@ -205,7 +206,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
             if (
                 isset($registrationData['tool_key_chain'])
-                && !array_key_exists($registrationData['tool_key_chain'], $keyChains)
+                && ! array_key_exists($registrationData['tool_key_chain'], $keyChains)
             ) {
                 throw new InvalidArgumentException(
                     sprintf(
@@ -231,9 +232,6 @@ class LaravelLTIServiceProvider extends ServiceProvider
             $registrations[$registrationId] = $registration;
         }
 
-
         return $registrations;
     }
-
-
 }
