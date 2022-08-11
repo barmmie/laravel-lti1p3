@@ -243,7 +243,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
     private function registerHttpFactories()
     {
-        $this->app->bind(HttpMessageFactoryInterface::class, function (){
+        $this->app->bind(HttpMessageFactoryInterface::class, function () {
             return new PsrHttpFactory(
                 new Psr17Factory(),
                 new Psr17Factory(),
@@ -252,9 +252,8 @@ class LaravelLTIServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(HttpFoundationFactoryInterface::class, function (){
+        $this->app->bind(HttpFoundationFactoryInterface::class, function () {
             return new HttpFoundationFactory();
         });
     }
-
 }
