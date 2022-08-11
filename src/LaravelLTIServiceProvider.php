@@ -5,6 +5,7 @@ namespace Wien\LaravelLTI;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use OAT\Library\Lti1p3Core\Platform\PlatformFactory;
 use OAT\Library\Lti1p3Core\Platform\PlatformInterface;
 use OAT\Library\Lti1p3Core\Registration\RegistrationFactory;
@@ -17,6 +18,10 @@ use OAT\Library\Lti1p3Core\Security\Key\KeyChainRepositoryInterface;
 use OAT\Library\Lti1p3Core\Security\Key\KeyInterface;
 use OAT\Library\Lti1p3Core\Tool\ToolFactory;
 use OAT\Library\Lti1p3Core\Tool\ToolInterface;
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
+use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
+use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
+use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
 use Wien\LaravelLTI\Repository\RegistrationRepository;
 
 class LaravelLTIServiceProvider extends ServiceProvider
@@ -34,6 +39,7 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
         $this->registerLTIRegistrations();
         $this->registerKeyChainRepositories();
+        $this->registerHttpFactories();
     }
 
     private function registerRoutes(): void
@@ -234,4 +240,21 @@ class LaravelLTIServiceProvider extends ServiceProvider
 
         return $registrations;
     }
+
+    private function registerHttpFactories()
+    {
+        $this->app->bind(HttpMessageFactoryInterface::class, function (){
+            return new PsrHttpFactory(
+                new Psr17Factory(),
+                new Psr17Factory(),
+                new Psr17Factory(),
+                new Psr17Factory(),
+            );
+        });
+
+        $this->app->bind(HttpFoundationFactoryInterface::class, function (){
+            return new HttpFoundationFactory();
+        });
+    }
+
 }
